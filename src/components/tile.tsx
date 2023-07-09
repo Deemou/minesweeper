@@ -13,6 +13,7 @@ import {
   openAllBombs
 } from 'app/slices/boardSlice';
 import getAdjacentTiles from 'utils/getAdjacentTiles';
+import { useEffect } from 'react';
 
 export default function Tile({
   value,
@@ -28,6 +29,30 @@ export default function Tile({
   const isTileDisabled = isOpen || isGameOver || isGameWon;
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    if (!isOpen || isBomb) return;
+
+    const adjacentTiles = getAdjacentTiles(x, y);
+    const adjacentBombs = adjacentTiles.filter((tile) => tile.isBomb);
+    dispatch(
+      setValue({
+        x,
+        y,
+        value: adjacentBombs.length
+      })
+    );
+
+    if (adjacentBombs.length !== 0) return;
+    openAdjacentTilesExceptFlagged();
+  }, [isOpen]);
+
+  const openAdjacentTilesExceptFlagged = (): void => {
+    const adjacentTiles = getAdjacentTiles(x, y);
+    adjacentTiles.forEach((tile) => {
+      !tile.isFlagged && dispatch(openTile({ x: tile.x, y: tile.y }));
+    });
+  };
+
   const onTileLeftClick = (): void => {
     if (isFlagged || isQuestionMark) return;
 
@@ -35,15 +60,6 @@ export default function Tile({
       dispatch(setGameOverStatus({ status: true }));
       dispatch(openAllBombs({ x, y }));
     } else {
-      const adjacentTiles = getAdjacentTiles(x, y);
-      const adjacentBombs = adjacentTiles.filter((tile) => tile.isBomb);
-      dispatch(
-        setValue({
-          x,
-          y,
-          value: adjacentBombs.length
-        })
-      );
       dispatch(openTile({ x, y }));
     }
   };
