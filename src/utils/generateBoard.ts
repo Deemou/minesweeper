@@ -1,8 +1,8 @@
 import { ITile, ICoord } from 'types/boardTypes';
 import { generateBombs } from './generateBombs';
 import isSamePosition from './isSamePosition';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { setBombsPosition } from 'app/slices/boardSlice';
+import { useAppDispatch, useAppSelector } from '@app/hooks';
+import { setBombsPosition } from '@app/slices/boardSlice';
 
 export default function generateBoard(): ITile[][] {
   const dispatch = useAppDispatch();

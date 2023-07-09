@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from 'app/hooks';
-import { setBoard, setGameWonStatus } from 'app/slices/boardSlice';
-import generateBoard from 'utils/generateBoard';
+import { useAppSelector, useAppDispatch } from '@app/hooks';
+import { setBoard, setGameWonStatus } from '@app/slices/boardSlice';
+import generateBoard from '@utils/generateBoard';
 import { ITile } from 'types/boardTypes';
-import Tile from 'components/tile';
+import Tile from '@components/tile';
 
 export default function Board() {
   const { boardWidth, boardHeight, bombsCount, board } = useAppSelector(

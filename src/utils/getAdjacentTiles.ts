@@ -1,4 +1,4 @@
-import { useAppSelector } from 'app/hooks';
+import { useAppSelector } from '@app/hooks';
 import { ITile } from 'types/boardTypes';
 
 export default function getAdjacentTiles(x: number, y: number): ITile[] {

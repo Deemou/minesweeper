@@ -1,7 +1,5 @@
 import { ITile } from 'types/boardTypes';
-
-import { useAppSelector, useAppDispatch } from 'app/hooks';
-
+import { useAppSelector, useAppDispatch } from '@app/hooks';
 import {
   openTile,
   increaseBombsCount,
@@ -11,8 +9,8 @@ import {
   setValue,
   setGameOverStatus,
   openAllBombs
-} from 'app/slices/boardSlice';
-import getAdjacentTiles from 'utils/getAdjacentTiles';
+} from '@app/slices/boardSlice';
+import getAdjacentTiles from '@utils/getAdjacentTiles';
 import { useEffect } from 'react';
 
 export default function Tile({
@@ -87,6 +85,7 @@ export default function Tile({
       onContextMenu={(e) => onTileRightClick(e)}
       onClick={onTileLeftClick}
     >
+      1
       {/* 타일 표시 로직
         빈칸, 숫자, Flag, ?, Bomb
       */}

@@ -1,6 +1,6 @@
 import { ICoord } from 'types/boardTypes';
 import getRandomNum from './getRandomNum';
-import { useAppSelector } from 'app/hooks';
+import { useAppSelector } from '@app/hooks';
 
 export function generateBombs(): ICoord[] {
   const { boardWidth, boardHeight, bombsCount } = useAppSelector(
