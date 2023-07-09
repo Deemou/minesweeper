@@ -1,8 +1,10 @@
-import { useAppSelector } from '@app/hooks';
 import { ITile } from 'types/boardTypes';
 
-export default function getAdjacentTiles(x: number, y: number): ITile[] {
-  const { board } = useAppSelector((state) => state.boardSlice);
+export default function getAdjacentTiles(
+  board: ITile[][],
+  x: number,
+  y: number
+): ITile[] {
   const tiles: ITile[] = [];
 
   for (let xOffset = -1; xOffset <= 1; xOffset++) {

@@ -23,14 +23,16 @@ export default function Tile({
   isBomb,
   isExploded
 }: ITile) {
-  const { isGameOver, isGameWon } = useAppSelector((state) => state.boardSlice);
+  const { board, isGameOver, isGameWon } = useAppSelector(
+    (state) => state.boardSlice
+  );
   const isTileDisabled = isOpen || isGameOver || isGameWon;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!isOpen || isBomb) return;
 
-    const adjacentTiles = getAdjacentTiles(x, y);
+    const adjacentTiles = getAdjacentTiles(board, x, y);
     const adjacentBombs = adjacentTiles.filter((tile) => tile.isBomb);
     dispatch(
       setValue({
@@ -41,11 +43,10 @@ export default function Tile({
     );
 
     if (adjacentBombs.length !== 0) return;
-    openAdjacentTilesExceptFlagged();
+    openAdjacentTilesExceptFlagged(adjacentTiles);
   }, [isOpen]);
 
-  const openAdjacentTilesExceptFlagged = (): void => {
-    const adjacentTiles = getAdjacentTiles(x, y);
+  const openAdjacentTilesExceptFlagged = (adjacentTiles: ITile[]): void => {
     adjacentTiles.forEach((tile) => {
       !tile.isFlagged && dispatch(openTile({ x: tile.x, y: tile.y }));
     });
@@ -81,11 +82,11 @@ export default function Tile({
 
   return (
     <button
+      type="button"
       disabled={isTileDisabled}
       onContextMenu={(e) => onTileRightClick(e)}
       onClick={onTileLeftClick}
     >
-      1
       {/* 타일 표시 로직
         빈칸, 숫자, Flag, ?, Bomb
       */}

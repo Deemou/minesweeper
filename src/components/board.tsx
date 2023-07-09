@@ -37,7 +37,6 @@ export default function Board() {
 
   return (
     <div>
-      1
       {board.map((row) => {
         return row.map((tile: ITile) => {
           return <Tile key={`${tile.x}.${tile.y}`} {...tile} />;
