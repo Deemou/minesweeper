@@ -1,11 +1,11 @@
 import { ICoord } from 'types/boardTypes';
 import getRandomNum from './getRandomNum';
-import { useAppSelector } from '@app/hooks';
 
-export function generateBombs(): ICoord[] {
-  const { boardWidth, boardHeight, bombsCount } = useAppSelector(
-    (state) => state.boardSlice
-  );
+export function generateBombs(
+  boardWidth: number,
+  boardHeight: number,
+  bombsCount: number
+): ICoord[] {
   const positions = new Set<ICoord>();
 
   while (positions.size < bombsCount) {

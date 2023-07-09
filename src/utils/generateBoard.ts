@@ -1,17 +1,18 @@
 import { ITile, ICoord } from 'types/boardTypes';
 import { generateBombs } from './generateBombs';
 import isSamePosition from './isSamePosition';
-import { useAppDispatch, useAppSelector } from '@app/hooks';
-import { setBombsPosition } from '@app/slices/boardSlice';
 
-export default function generateBoard(): ITile[][] {
-  const dispatch = useAppDispatch();
-  const { boardWidth, boardHeight } = useAppSelector(
-    (state) => state.boardSlice
-  );
+export default function generateBoard(
+  boardWidth: number,
+  boardHeight: number,
+  bombsCount: number
+): { board: ITile[][]; bombsPosition: ICoord[] } {
   const board: ITile[][] = [];
-  const bombsPosition: ICoord[] = generateBombs();
-  dispatch(setBombsPosition(bombsPosition));
+  const bombsPosition: ICoord[] = generateBombs(
+    boardWidth,
+    boardHeight,
+    bombsCount
+  );
 
   for (let x = 0; x < boardWidth; x++) {
     const rowArr: ITile[] = [];
@@ -30,5 +31,5 @@ export default function generateBoard(): ITile[][] {
     board.push(rowArr);
   }
 
-  return board;
+  return { board, bombsPosition };
 }

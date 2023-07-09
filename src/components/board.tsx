@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '@app/hooks';
-import { setBoard, setGameWonStatus } from '@app/slices/boardSlice';
+import {
+  setBoard,
+  setBombsPosition,
+  setGameWonStatus
+} from '@app/slices/boardSlice';
 import generateBoard from '@utils/generateBoard';
 import { ITile } from 'types/boardTypes';
 import Tile from '@components/tile';
@@ -13,8 +17,13 @@ export default function Board() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const newBoard = generateBoard();
+    const { board: newBoard, bombsPosition } = generateBoard(
+      boardWidth,
+      boardHeight,
+      bombsCount
+    );
     dispatch(setBoard(newBoard));
+    dispatch(setBombsPosition(bombsPosition));
   }, [boardWidth, boardHeight, bombsCount]);
 
   useEffect(() => {
@@ -28,6 +37,7 @@ export default function Board() {
 
   return (
     <div>
+      1
       {board.map((row) => {
         return row.map((tile: ITile) => {
           return <Tile key={`${tile.x}.${tile.y}`} {...tile} />;
