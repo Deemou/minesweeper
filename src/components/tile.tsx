@@ -2,8 +2,8 @@ import { ITile } from 'types/boardTypes';
 import { useAppSelector, useAppDispatch } from '@app/hooks';
 import {
   openTile,
-  increaseBombsCount,
-  decreaseBombsCount,
+  increaseBombsLeftCount,
+  decreaseBombsLeftCount,
   setFlaggedStatus,
   setQuestionMarkStatus,
   setValue,
@@ -70,11 +70,11 @@ export default function Tile({
 
     if (!isFlagged && !isQuestionMark) {
       dispatch(setFlaggedStatus({ x, y, status: true }));
-      dispatch(decreaseBombsCount());
+      dispatch(decreaseBombsLeftCount());
     } else if (isFlagged) {
       dispatch(setFlaggedStatus({ x, y, status: false }));
       dispatch(setQuestionMarkStatus({ x, y, status: true }));
-      dispatch(increaseBombsCount());
+      dispatch(increaseBombsLeftCount());
     } else {
       dispatch(setQuestionMarkStatus({ x, y, status: false }));
     }

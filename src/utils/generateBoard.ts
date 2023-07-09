@@ -5,13 +5,13 @@ import isSamePosition from './isSamePosition';
 export default function generateBoard(
   boardWidth: number,
   boardHeight: number,
-  bombsCount: number
+  totalBombsCount: number
 ): { board: ITile[][]; bombsPosition: ICoord[] } {
   const board: ITile[][] = [];
   const bombsPosition: ICoord[] = generateBombs(
     boardWidth,
     boardHeight,
-    bombsCount
+    totalBombsCount
   );
 
   for (let x = 0; x < boardWidth; x++) {

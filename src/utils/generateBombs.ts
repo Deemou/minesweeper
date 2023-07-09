@@ -4,11 +4,11 @@ import getRandomNum from './getRandomNum';
 export function generateBombs(
   boardWidth: number,
   boardHeight: number,
-  bombsCount: number
+  totalBombsCount: number
 ): ICoord[] {
   const positions = new Set<ICoord>();
 
-  while (positions.size < bombsCount) {
+  while (positions.size < totalBombsCount) {
     const bombPosition: ICoord = {
       x: getRandomNum(boardWidth),
       y: getRandomNum(boardHeight)

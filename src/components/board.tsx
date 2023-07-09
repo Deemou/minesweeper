@@ -10,9 +10,8 @@ import { ITile } from 'types/boardTypes';
 import Tile from '@components/tile';
 
 export default function Board() {
-  const { boardWidth, boardHeight, bombsCount, board } = useAppSelector(
-    (state) => state.boardSlice
-  );
+  const { boardWidth, boardHeight, totalBombsCount, bombsLeftCount, board } =
+    useAppSelector((state) => state.boardSlice);
 
   const dispatch = useAppDispatch();
 
@@ -20,20 +19,20 @@ export default function Board() {
     const { board: newBoard, bombsPosition } = generateBoard(
       boardWidth,
       boardHeight,
-      bombsCount
+      totalBombsCount
     );
     dispatch(setBoard(newBoard));
     dispatch(setBombsPosition(bombsPosition));
-  }, [boardWidth, boardHeight, bombsCount]);
+  }, [boardWidth, boardHeight, totalBombsCount]);
 
   useEffect(() => {
-    if (bombsCount !== 0) return;
+    if (bombsLeftCount !== 0) return;
     const isAllSafeTilesOpen = board
       .flat()
       .every((tile) => tile.isBomb || tile.isOpen);
 
     if (isAllSafeTilesOpen) dispatch(setGameWonStatus({ status: true }));
-  }, [board, bombsCount]);
+  }, [board, bombsLeftCount]);
 
   return (
     <div>
