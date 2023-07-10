@@ -1,0 +1,9 @@
+@import './reset';
+@import './vars';
+
+body {
+  font-weight: 400;
+  color: $dark-color;
+  background-color: $white-color;
+  height: 100%;
+}
