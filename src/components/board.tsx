@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '@app/hooks';
 import {
   setBoard,
@@ -8,12 +8,18 @@ import {
 import generateBoard from '@utils/generateBoard';
 import { ITile } from 'types/boardTypes';
 import Tile from '@components/tile';
+import '@styles/board.scss';
 
 export default function Board() {
   const { boardWidth, boardHeight, totalBombsCount, bombsLeftCount, board } =
     useAppSelector((state) => state.boardSlice);
-
   const dispatch = useAppDispatch();
+  const boardRef = useRef<HTMLDivElement>(null!);
+
+  useEffect(() => {
+    boardRef.current.style.setProperty('--rows', String(boardWidth));
+    boardRef.current.style.setProperty('--cols', String(boardHeight));
+  }, [boardWidth, boardHeight]);
 
   useEffect(() => {
     const { board: newBoard, bombsPosition } = generateBoard(
@@ -32,10 +38,10 @@ export default function Board() {
       .every((tile) => tile.isBomb || tile.isOpen);
 
     if (isAllSafeTilesOpen) dispatch(setGameWonStatus({ status: true }));
-  }, [board, bombsLeftCount]);
+  }, [bombsLeftCount]);
 
   return (
-    <div>
+    <div className="board" ref={boardRef}>
       {board.map((row) => {
         return row.map((tile: ITile) => {
           return <Tile key={`${tile.x}.${tile.y}`} {...tile} />;

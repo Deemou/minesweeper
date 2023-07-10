@@ -1,0 +1,14 @@
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: calc(100vh - 0px);
+}
+
+.container {
+  position: absolute;
+  background-color: #c0c0c0;
+  padding: 8px;
+  border-radius: 10px;
+}

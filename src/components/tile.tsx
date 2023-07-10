@@ -13,6 +13,8 @@ import {
 import getAdjacentTiles from '@utils/getAdjacentTiles';
 import { useEffect } from 'react';
 
+import '@styles/tile.scss';
+
 export default function Tile({
   value,
   x,

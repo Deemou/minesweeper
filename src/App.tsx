@@ -1,12 +1,15 @@
 import Header from '@components/header';
 import Board from '@components/board';
 import '@styles/style.scss';
+import '@styles/app.scss';
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <Board />
+      <div className="container">
+        <Header />
+        <Board />
+      </div>
     </div>
   );
 }

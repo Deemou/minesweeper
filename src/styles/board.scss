@@ -1,0 +1,13 @@
+@import './vars';
+
+.board {
+  border-top: 4px solid $dark-gray-color;
+  border-left: 4px solid $dark-gray-color;
+  border-bottom: 4px solid $white-color;
+  border-right: 4px solid $white-color;
+  background-color: $dark-color;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 15px);
+  grid-template-rows: repeat(var(--rows), 15px);
+  gap: 1px;
+}
