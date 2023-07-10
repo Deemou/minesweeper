@@ -11,25 +11,25 @@ import Tile from '@components/tile';
 import '@styles/board.scss';
 
 export default function Board() {
-  const { boardWidth, boardHeight, totalBombsCount, bombsLeftCount, board } =
+  const { boardRows, boardCols, totalBombsCount, bombsLeftCount, board } =
     useAppSelector((state) => state.boardSlice);
   const dispatch = useAppDispatch();
   const boardRef = useRef<HTMLDivElement>(null!);
 
   useEffect(() => {
-    boardRef.current.style.setProperty('--rows', String(boardWidth));
-    boardRef.current.style.setProperty('--cols', String(boardHeight));
-  }, [boardWidth, boardHeight]);
+    boardRef.current.style.setProperty('--rows', String(boardRows));
+    boardRef.current.style.setProperty('--cols', String(boardCols));
+  }, [boardRows, boardCols]);
 
   useEffect(() => {
     const { board: newBoard, bombsPosition } = generateBoard(
-      boardWidth,
-      boardHeight,
+      boardRows,
+      boardCols,
       totalBombsCount
     );
     dispatch(setBoard(newBoard));
     dispatch(setBombsPosition(bombsPosition));
-  }, [boardWidth, boardHeight, totalBombsCount]);
+  }, [boardRows, boardCols, totalBombsCount]);
 
   useEffect(() => {
     if (bombsLeftCount !== 0) return;

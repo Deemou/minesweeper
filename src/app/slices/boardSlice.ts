@@ -3,8 +3,8 @@ import { ITile, ICoord } from 'types/boardTypes';
 
 interface IboardSlice {
   board: ITile[][];
-  boardWidth: number;
-  boardHeight: number;
+  boardRows: number;
+  boardCols: number;
   totalBombsCount: number;
   bombsLeftCount: number;
   bombsPosition: ICoord[];
@@ -14,8 +14,8 @@ interface IboardSlice {
 
 const initialState: IboardSlice = {
   board: [],
-  boardWidth: 8,
-  boardHeight: 8,
+  boardRows: 8,
+  boardCols: 8,
   totalBombsCount: 10,
   bombsLeftCount: 10,
   bombsPosition: [],

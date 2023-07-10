@@ -3,20 +3,20 @@ import { generateBombs } from './generateBombs';
 import isSamePosition from './isSamePosition';
 
 export default function generateBoard(
-  boardWidth: number,
-  boardHeight: number,
+  boardRows: number,
+  boardCols: number,
   totalBombsCount: number
 ): { board: ITile[][]; bombsPosition: ICoord[] } {
   const board: ITile[][] = [];
   const bombsPosition: ICoord[] = generateBombs(
-    boardWidth,
-    boardHeight,
+    boardRows,
+    boardCols,
     totalBombsCount
   );
 
-  for (let x = 0; x < boardWidth; x++) {
+  for (let x = 0; x < boardRows; x++) {
     const rowArr: ITile[] = [];
-    for (let y = 0; y < boardHeight; y++) {
+    for (let y = 0; y < boardCols; y++) {
       rowArr.push({
         x,
         y,

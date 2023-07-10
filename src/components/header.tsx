@@ -8,7 +8,7 @@ import {
 import generateBoard from '@utils/generateBoard';
 
 export default function Header() {
-  const { boardWidth, boardHeight, totalBombsCount, bombsLeftCount } =
+  const { boardRows, boardCols, totalBombsCount, bombsLeftCount } =
     useAppSelector((state) => state.boardSlice);
 
   const dispatch = useAppDispatch();
@@ -18,8 +18,8 @@ export default function Header() {
     dispatch(setGameWonStatus({ status: false }));
 
     const { board: newBoard, bombsPosition } = generateBoard(
-      boardWidth,
-      boardHeight,
+      boardRows,
+      boardCols,
       totalBombsCount
     );
     dispatch(setBoard(newBoard));
