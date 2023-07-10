@@ -10,8 +10,9 @@ import {
   setGameOverStatus,
   openAllBombs
 } from '@app/slices/boardSlice';
+import { determineNumberColor } from '@utils/determineNumberColor';
 import getAdjacentTiles from '@utils/getAdjacentTiles';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import FlagIcon from '@/asset/icon/flag-icon';
 import QuestionMarkIcon from '@/asset/icon/question-mark-icon';
 import BombIcon from '@/asset/icon/bomb-icon';
@@ -31,6 +32,7 @@ export default function Tile({
     (state) => state.boardSlice
   );
   const dispatch = useAppDispatch();
+  const [numberColor, setNumberColor] = useState('#878787');
 
   const isQuestionMarkMarked = !isOpen && isQuestionMark;
   const isBombMarked = isOpen && isBomb;
@@ -59,6 +61,11 @@ export default function Tile({
       !tile.isFlagged && dispatch(openTile({ x: tile.x, y: tile.y }));
     });
   };
+
+  useEffect(() => {
+    if (!isNumberMarked) return;
+    setNumberColor(determineNumberColor(value));
+  }, [isNumberMarked]);
 
   const onTileLeftClick = (): void => {
     if (isFlagged || isQuestionMark) return;
@@ -94,6 +101,7 @@ export default function Tile({
       disabled={isTileDisabled}
       onContextMenu={(e) => onTileRightClick(e)}
       onClick={onTileLeftClick}
+      style={{ color: numberColor }}
       className={`tile ${isOpen ? 'open' : ''} ${isBombMarked ? 'bomb' : ''} ${
         isExploded ? 'exploded' : ''
       }`}
