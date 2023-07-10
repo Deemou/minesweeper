@@ -12,7 +12,9 @@ import {
 } from '@app/slices/boardSlice';
 import getAdjacentTiles from '@utils/getAdjacentTiles';
 import { useEffect } from 'react';
-
+import FlagIcon from '@/asset/icon/flag-icon';
+import QuestionMarkIcon from '@/asset/icon/question-mark-icon';
+import BombIcon from '@/asset/icon/bomb-icon';
 import '@styles/tile.scss';
 
 export default function Tile({
@@ -28,8 +30,12 @@ export default function Tile({
   const { board, isGameOver, isGameWon } = useAppSelector(
     (state) => state.boardSlice
   );
-  const isTileDisabled = isOpen || isGameOver || isGameWon;
   const dispatch = useAppDispatch();
+
+  const isQuestionMarkMarked = !isOpen && isQuestionMark;
+  const isBombMarked = isOpen && isBomb;
+  const isNumberMarked = isOpen && value;
+  const isTileDisabled = isOpen || isGameOver || isGameWon;
 
   useEffect(() => {
     if (!isOpen || isBomb) return;
@@ -88,10 +94,14 @@ export default function Tile({
       disabled={isTileDisabled}
       onContextMenu={(e) => onTileRightClick(e)}
       onClick={onTileLeftClick}
+      className={`tile ${isOpen ? 'open' : ''} ${isBombMarked ? 'bomb' : ''} ${
+        isExploded ? 'exploded' : ''
+      }`}
     >
-      {/* 타일 표시 로직
-        빈칸, 숫자, Flag, ?, Bomb
-      */}
+      {isFlagged && <FlagIcon />}
+      {isQuestionMarkMarked && <QuestionMarkIcon />}
+      {isBombMarked && <BombIcon />}
+      {isNumberMarked ? value : ''}
     </button>
   );
 }
