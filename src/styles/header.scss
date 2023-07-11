@@ -1,0 +1,24 @@
+@import 'vars';
+
+.header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 4px;
+}
+
+.bombs-count,
+.timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $dark-color;
+  padding: 2px;
+  height: 26px;
+
+  span {
+    color: $red-color;
+    font-size: 20px;
+  }
+}

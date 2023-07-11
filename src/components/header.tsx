@@ -8,6 +8,7 @@ import {
   initTileClickCount
 } from '@app/slices/boardSlice';
 import generateBoard from '@utils/generateBoard';
+import '@styles/header.scss';
 import { padStartZero } from '@/utils/padStartZero';
 import Timer from '@components/timer';
 
@@ -32,9 +33,9 @@ export default function Header() {
   };
 
   return (
-    <div>
-      <div>
-        <span>{bombsLeftCount}</span>
+    <div className="header">
+      <div className="bombs-count">
+        <span>{padStartZero(bombsLeftCount, 3)}</span>
       </div>
       <div>
         <button type="button" onClick={() => onRestartClick()}>

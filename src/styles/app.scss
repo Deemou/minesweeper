@@ -1,3 +1,5 @@
+@import 'vars';
+
 .App {
   display: flex;
   align-items: center;
@@ -6,9 +8,21 @@
   height: calc(100vh - 0px);
 }
 
-.container {
+.game-container {
   position: absolute;
   background-color: #c0c0c0;
-  padding: 8px;
-  border-radius: 10px;
+  padding: 6px;
+  border-radius: 5px;
+}
+
+.menu-container {
+  padding-bottom: 2px;
+}
+
+.board-container {
+  padding: 6px;
+  border-top: 3px solid $white-color;
+  border-left: 3px solid $white-color;
+  border-bottom: 3px solid $dark-gray-color;
+  border-right: 3px solid $dark-gray-color;
 }
