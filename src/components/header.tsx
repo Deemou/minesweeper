@@ -5,7 +5,8 @@ import {
   setGameStartStatus,
   setGameOverStatus,
   setGameWonStatus,
-  initTileClickCount
+  initTileClickCount,
+  initBombsLeftCount
 } from '@app/slices/boardSlice';
 import generateBoard from '@utils/generateBoard';
 import '@styles/header.scss';
@@ -22,6 +23,7 @@ export default function Header() {
     dispatch(setGameOverStatus({ status: false }));
     dispatch(setGameWonStatus({ status: false }));
     dispatch(initTileClickCount());
+    dispatch(initBombsLeftCount());
 
     const { board: newBoard, bombsPosition } = generateBoard(
       boardRows,

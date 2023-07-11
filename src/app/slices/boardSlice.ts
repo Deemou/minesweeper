@@ -110,6 +110,9 @@ const boardSlice = createSlice({
     },
     decreaseBombsLeftCount(state) {
       state.bombsLeftCount -= 1;
+    },
+    initBombsLeftCount(state) {
+      state.bombsLeftCount = state.totalBombsCount;
     }
   }
 });
@@ -129,7 +132,8 @@ export const {
   initTileClickCount,
   increaseTileClickCount,
   increaseBombsLeftCount,
-  decreaseBombsLeftCount
+  decreaseBombsLeftCount,
+  initBombsLeftCount
 } = boardSlice.actions;
 
 export default boardSlice.reducer;
