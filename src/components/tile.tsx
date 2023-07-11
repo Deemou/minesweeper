@@ -1,7 +1,7 @@
 import { ITile } from 'types/boardTypes';
 import { useAppSelector, useAppDispatch } from '@app/hooks';
 import {
-  changeBombPosition,
+  repositionBomb,
   openTile,
   setFlaggedStatus,
   setQuestionMarkStatus,
@@ -72,7 +72,7 @@ export default function Tile({
   const onTileLeftClick = () => {
     if (isFlagged || isQuestionMark) return;
 
-    if (tileClickCount === 0 && isBomb) dispatch(changeBombPosition({ x, y }));
+    if (tileClickCount === 0 && isBomb) dispatch(repositionBomb({ x, y }));
     else if (tileClickCount !== 0 && isBomb) {
       dispatch(setGameOverStatus({ status: true }));
       dispatch(openAllBombs({ x, y }));

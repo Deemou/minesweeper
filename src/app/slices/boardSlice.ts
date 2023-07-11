@@ -36,7 +36,7 @@ const boardSlice = createSlice({
     setBombsPosition(state, action: PayloadAction<ICoord[]>) {
       state.bombsPosition = action.payload;
     },
-    changeBombPosition(state, action: PayloadAction<{ x: number; y: number }>) {
+    repositionBomb(state, action: PayloadAction<{ x: number; y: number }>) {
       const { x, y } = action.payload;
       const bombTile = state.board[x][y];
 
@@ -111,7 +111,7 @@ const boardSlice = createSlice({
 export const {
   setBoard,
   setBombsPosition,
-  changeBombPosition,
+  repositionBomb,
   openTile,
   setFlaggedStatus,
   setQuestionMarkStatus,
