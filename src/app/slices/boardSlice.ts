@@ -10,6 +10,7 @@ interface IboardSlice {
   bombsLeftCount: number;
   bombsPosition: ICoord[];
   tileClickCount: number;
+  isGameStart: boolean;
   isGameOver: boolean;
   isGameWon: boolean;
 }
@@ -22,6 +23,7 @@ const initialState: IboardSlice = {
   bombsLeftCount: 10,
   bombsPosition: [],
   tileClickCount: 0,
+  isGameStart: false,
   isGameOver: false,
   isGameWon: false
 };
@@ -78,6 +80,10 @@ const boardSlice = createSlice({
       const { x, y, value } = action.payload;
       state.board[x][y].value = value;
     },
+    setGameStartStatus(state, action: PayloadAction<{ status: boolean }>) {
+      const { status } = action.payload;
+      state.isGameStart = status;
+    },
     setGameWonStatus(state, action: PayloadAction<{ status: boolean }>) {
       const { status } = action.payload;
       state.isGameWon = status;
@@ -116,6 +122,7 @@ export const {
   setFlaggedStatus,
   setQuestionMarkStatus,
   setValue,
+  setGameStartStatus,
   setGameWonStatus,
   setGameOverStatus,
   openAllBombs,

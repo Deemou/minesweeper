@@ -2,19 +2,22 @@ import { useAppSelector, useAppDispatch } from '@app/hooks';
 import {
   setBoard,
   setBombsPosition,
+  setGameStartStatus,
   setGameOverStatus,
   setGameWonStatus,
   initTileClickCount
 } from '@app/slices/boardSlice';
 import generateBoard from '@utils/generateBoard';
+import { padStartZero } from '@/utils/padStartZero';
+import Timer from '@components/timer';
 
 export default function Header() {
   const { boardRows, boardCols, totalBombsCount, bombsLeftCount } =
     useAppSelector((state) => state.boardSlice);
-
   const dispatch = useAppDispatch();
 
   const onRestartClick = (): void => {
+    dispatch(setGameStartStatus({ status: false }));
     dispatch(setGameOverStatus({ status: false }));
     dispatch(setGameWonStatus({ status: false }));
     dispatch(initTileClickCount());
@@ -38,10 +41,8 @@ export default function Header() {
           Restart
         </button>
       </div>
-      <div>
-        <span>
-          <div>999</div>
-        </span>
+      <div className="timer">
+        <Timer />
       </div>
     </div>
   );

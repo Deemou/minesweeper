@@ -2,8 +2,14 @@
 @import './vars';
 
 body {
+  font-size: 12px;
   font-weight: 400;
   color: $dark-color;
   background-color: $dark-color;
   height: 100%;
+}
+
+button {
+  background-color: inherit;
+  border: none;
 }

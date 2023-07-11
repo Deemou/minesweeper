@@ -6,6 +6,7 @@ import {
   setFlaggedStatus,
   setQuestionMarkStatus,
   setValue,
+  setGameStartStatus,
   setGameOverStatus,
   openAllBombs,
   increaseTileClickCount,
@@ -72,8 +73,10 @@ export default function Tile({
   const onTileLeftClick = () => {
     if (isFlagged || isQuestionMark) return;
 
+    if (tileClickCount === 0) dispatch(setGameStartStatus({ status: true }));
     if (tileClickCount === 0 && isBomb) dispatch(repositionBomb({ x, y }));
     else if (tileClickCount !== 0 && isBomb) {
+      dispatch(setGameStartStatus({ status: false }));
       dispatch(setGameOverStatus({ status: true }));
       dispatch(openAllBombs({ x, y }));
     }
