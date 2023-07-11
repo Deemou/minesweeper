@@ -1,14 +1,16 @@
 import { ITile } from 'types/boardTypes';
 import { useAppSelector, useAppDispatch } from '@app/hooks';
 import {
+  changeBombPosition,
   openTile,
-  increaseBombsLeftCount,
-  decreaseBombsLeftCount,
   setFlaggedStatus,
   setQuestionMarkStatus,
   setValue,
   setGameOverStatus,
-  openAllBombs
+  openAllBombs,
+  increaseTileClickCount,
+  increaseBombsLeftCount,
+  decreaseBombsLeftCount
 } from '@app/slices/boardSlice';
 import { determineNumberColor } from '@utils/determineNumberColor';
 import getAdjacentTiles from '@utils/getAdjacentTiles';
@@ -28,7 +30,7 @@ export default function Tile({
   isBomb,
   isExploded
 }: ITile) {
-  const { board, isGameOver, isGameWon } = useAppSelector(
+  const { board, isGameOver, isGameWon, tileClickCount } = useAppSelector(
     (state) => state.boardSlice
   );
   const dispatch = useAppDispatch();
@@ -67,15 +69,16 @@ export default function Tile({
     setNumberColor(determineNumberColor(value));
   }, [isNumberMarked]);
 
-  const onTileLeftClick = (): void => {
+  const onTileLeftClick = () => {
     if (isFlagged || isQuestionMark) return;
 
-    if (isBomb) {
+    if (tileClickCount === 0 && isBomb) dispatch(changeBombPosition({ x, y }));
+    else if (tileClickCount !== 0 && isBomb) {
       dispatch(setGameOverStatus({ status: true }));
       dispatch(openAllBombs({ x, y }));
-    } else {
-      dispatch(openTile({ x, y }));
     }
+    dispatch(increaseTileClickCount());
+    dispatch(openTile({ x, y }));
   };
 
   const onTileRightClick = (e: React.MouseEvent): void => {

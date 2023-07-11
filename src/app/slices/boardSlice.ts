@@ -1,3 +1,4 @@
+import isSamePosition from '@/utils/isSamePosition';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITile, ICoord } from 'types/boardTypes';
 
@@ -8,6 +9,7 @@ interface IboardSlice {
   totalBombsCount: number;
   bombsLeftCount: number;
   bombsPosition: ICoord[];
+  tileClickCount: number;
   isGameOver: boolean;
   isGameWon: boolean;
 }
@@ -19,6 +21,7 @@ const initialState: IboardSlice = {
   totalBombsCount: 10,
   bombsLeftCount: 10,
   bombsPosition: [],
+  tileClickCount: 0,
   isGameOver: false,
   isGameWon: false
 };
@@ -33,6 +36,23 @@ const boardSlice = createSlice({
     setBombsPosition(state, action: PayloadAction<ICoord[]>) {
       state.bombsPosition = action.payload;
     },
+    changeBombPosition(state, action: PayloadAction<{ x: number; y: number }>) {
+      const { x, y } = action.payload;
+      const bombTile = state.board[x][y];
+
+      for (let row = 0; row < state.boardRows; row++) {
+        const nonBombTile = state.board[row].find((tile) => !tile.isBomb);
+        if (nonBombTile) {
+          bombTile.isBomb = false;
+          nonBombTile.isBomb = true;
+          const idx = state.bombsPosition.findIndex((pos) =>
+            isSamePosition(pos, bombTile)
+          );
+          state.bombsPosition[idx] = nonBombTile;
+          break;
+        }
+      }
+    },
     openTile(state, action: PayloadAction<{ x: number; y: number }>) {
       const { x, y } = action.payload;
       state.board[x][y].isOpen = true;
@@ -43,12 +63,6 @@ const boardSlice = createSlice({
     ) {
       const { x, y, status } = action.payload;
       state.board[x][y].isFlagged = status;
-    },
-    increaseBombsLeftCount(state) {
-      state.bombsLeftCount += 1;
-    },
-    decreaseBombsLeftCount(state) {
-      state.bombsLeftCount -= 1;
     },
     setQuestionMarkStatus(
       state,
@@ -78,6 +92,18 @@ const boardSlice = createSlice({
       state.bombsPosition.forEach((pos) => {
         state.board[pos.x][pos.y].isOpen = true;
       });
+    },
+    initTileClickCount(state) {
+      state.tileClickCount = 0;
+    },
+    increaseTileClickCount(state) {
+      state.tileClickCount += 1;
+    },
+    increaseBombsLeftCount(state) {
+      state.bombsLeftCount += 1;
+    },
+    decreaseBombsLeftCount(state) {
+      state.bombsLeftCount -= 1;
     }
   }
 });
@@ -85,15 +111,18 @@ const boardSlice = createSlice({
 export const {
   setBoard,
   setBombsPosition,
+  changeBombPosition,
   openTile,
   setFlaggedStatus,
-  increaseBombsLeftCount,
-  decreaseBombsLeftCount,
   setQuestionMarkStatus,
   setValue,
   setGameWonStatus,
   setGameOverStatus,
-  openAllBombs
+  openAllBombs,
+  initTileClickCount,
+  increaseTileClickCount,
+  increaseBombsLeftCount,
+  decreaseBombsLeftCount
 } = boardSlice.actions;
 
 export default boardSlice.reducer;
