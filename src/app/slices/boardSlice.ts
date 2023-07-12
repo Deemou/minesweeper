@@ -32,6 +32,21 @@ const boardSlice = createSlice({
   name: 'boardSlice',
   initialState,
   reducers: {
+    setBoardRows(state, action: PayloadAction<{ boardRows: number }>) {
+      const { boardRows } = action.payload;
+      state.boardRows = boardRows;
+    },
+    setBoardCols(state, action: PayloadAction<{ boardCols: number }>) {
+      const { boardCols } = action.payload;
+      state.boardCols = boardCols;
+    },
+    setTotalBombsCount(
+      state,
+      action: PayloadAction<{ totalBombsCount: number }>
+    ) {
+      const { totalBombsCount } = action.payload;
+      state.totalBombsCount = totalBombsCount;
+    },
     setBoard(state, action: PayloadAction<ITile[][]>) {
       state.board = action.payload;
     },
@@ -118,6 +133,9 @@ const boardSlice = createSlice({
 });
 
 export const {
+  setBoardRows,
+  setBoardCols,
+  setTotalBombsCount,
   setBoard,
   setBombsPosition,
   repositionBomb,

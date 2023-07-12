@@ -1,0 +1,26 @@
+@import 'vars';
+
+.menu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: $gray-color;
+  z-index: 10;
+  border: $dark-gray-color 2px solid;
+  top: 25px;
+  width: 110px;
+}
+
+.menu-item {
+  display: flex;
+  text-align: left;
+
+  &:hover {
+    color: $green-color;
+  }
+
+  div {
+    width: 10px;
+    margin-right: 5px;
+  }
+}
