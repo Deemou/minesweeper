@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useAppDispatch } from '@/app/hooks';
 import {
   setBoardRows,
@@ -7,15 +7,19 @@ import {
   initBombsLeftCount
 } from '@app/slices/boardSlice';
 import CheckIcon from '@/asset/icon/check-icon';
+import GameSetupModal from '@/components/game-setup-modal';
 import '@styles/menu.scss';
 
 export default function Menu() {
   const dispatch = useAppDispatch();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [level, setLevel] = useState('Beginner');
   const menuRef = useRef<HTMLDivElement>(null!);
 
   useEffect(() => {
+    if (level === 'Custom') return;
+
     switch (level) {
       case 'Beginner':
         setBoardProps(8, 8, 10);
@@ -29,25 +33,24 @@ export default function Menu() {
     }
   }, [level]);
 
-  const setBoardProps = (
-    boardRows: number,
-    boardCols: number,
-    totalBombsCount: number
-  ): void => {
-    dispatch(setBoardRows({ boardRows }));
-    dispatch(setBoardCols({ boardCols }));
-    dispatch(setTotalBombsCount({ totalBombsCount }));
-    dispatch(initBombsLeftCount());
-  };
+  const setBoardProps = useCallback(
+    (boardRows: number, boardCols: number, totalBombsCount: number): void => {
+      dispatch(setBoardRows({ boardRows }));
+      dispatch(setBoardCols({ boardCols }));
+      dispatch(setTotalBombsCount({ totalBombsCount }));
+      dispatch(initBombsLeftCount());
+    },
+    []
+  );
 
   const onMenuButtonClick = () => {
     if (isMenuVisible) setIsMenuVisible(false);
     else setIsMenuVisible(true);
   };
 
-  const onMenuClick = () => {
+  const onMenuClick = useCallback(() => {
     setIsMenuVisible(false);
-  };
+  }, []);
 
   const onBeginnerClick = () => {
     setLevel('Beginner');
@@ -60,6 +63,7 @@ export default function Menu() {
   };
   const onCustomClick = () => {
     setLevel('Custom');
+    setIsModalVisible(true);
   };
 
   return (
@@ -90,6 +94,12 @@ export default function Menu() {
             <span>Custom</span>
           </button>
         </div>
+      )}
+      {isModalVisible && (
+        <GameSetupModal
+          setIsModalVisible={setIsModalVisible}
+          setBoardProps={setBoardProps}
+        />
       )}
     </>
   );
