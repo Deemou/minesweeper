@@ -18,6 +18,21 @@ button {
 form {
   display: flex;
   flex-direction: column;
+  padding: 10px;
+
+  button {
+    margin-top: 10px;
+    border: 1px solid $dark-color;
+  }
+}
+
+input {
+  width: 50px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .modal {
@@ -25,7 +40,7 @@ form {
   display: flex;
   justify-content: center;
   width: 300px;
-  height: 250px;
+  height: 200px;
   z-index: 100;
   left: 50%;
   top: 50%;
@@ -43,4 +58,9 @@ form {
   height: 100%;
   z-index: 50;
   background: rgba(0, 0, 0, 0.6);
+}
+
+.input-box {
+  display: flex;
+  justify-content: space-between;
 }

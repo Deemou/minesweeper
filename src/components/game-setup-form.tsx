@@ -26,12 +26,7 @@ export default function GameSetupForm({
     boardCols: currentBoardCols,
     totalBombsCount: currentTotalBombsCount
   } = useAppSelector((state) => state.boardSlice);
-  const {
-    register,
-    setValue,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<IGameSetupForm>();
+  const { register, setValue, handleSubmit } = useForm<IGameSetupForm>();
 
   useEffect(() => {
     setValue('boardRows', currentBoardRows);
@@ -51,74 +46,46 @@ export default function GameSetupForm({
   return (
     <>
       <form onSubmit={handleSubmit(onValid)} className="form">
-        <div>
-          <label htmlFor="boardRows">Board Rows:</label>
+        <div className="input-box">
+          <label htmlFor="boardRows">Board Rows</label>
           <input
             id="boardRows"
             type="number"
             required
+            min={8}
+            max={50}
             {...register('boardRows', {
-              required: true,
-              min: {
-                value: 8,
-                message: 'The minimum value of rows is 8'
-              },
-              max: {
-                value: 50,
-                message: 'The maximun value of rows is 50'
-              }
+              required: true
             })}
           />
-          {errors.boardRows && (
-            <span className="error-message">{errors.boardRows.message}</span>
-          )}
         </div>
-        <div>
-          <label htmlFor="boardCols">Board Columns:</label>
+        <div className="input-box">
+          <label htmlFor="boardCols">Board Columns</label>
           <input
             id="boardCols"
             type="number"
             required
+            min={8}
+            max={50}
             {...register('boardCols', {
-              required: true,
-              min: {
-                value: 8,
-                message: 'The minimum value of columns is 8'
-              },
-              max: {
-                value: 50,
-                message: 'The maximun value of columns is 50'
-              }
+              required: true
             })}
           />
-          {errors.boardCols && (
-            <span className="error-message">{errors.boardCols.message}</span>
-          )}
         </div>
-        <div>
-          <label htmlFor="totalBombsCount">Number of Bombs:</label>
+        <div className="input-box">
+          <label htmlFor="totalBombsCount">Number of Bombs</label>
           <input
             id="totalBombsCount"
             type="number"
             required
+            min={10}
+            max={100}
             {...register('totalBombsCount', {
-              required: true,
-              min: {
-                value: 10,
-                message: 'The minimum value of bombs is 10'
-              },
-              max: {
-                value: 50,
-                message: 'The maximun value of bombs is 50'
-              }
+              required: true
             })}
           />
-          {errors.totalBombsCount && (
-            <span className="error-message">
-              {errors.totalBombsCount.message}
-            </span>
-          )}
         </div>
+
         <button type="submit">
           <span>Apply</span>
         </button>
