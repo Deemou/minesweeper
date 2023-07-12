@@ -39,6 +39,10 @@ export default function GameSetupForm({
     boardCols,
     totalBombsCount
   }: IGameSetupForm) => {
+    if (totalBombsCount > Math.floor((boardRows * boardCols) / 3)) {
+      alert('Number of bombs: from 10 to 1/3 of board size');
+      return;
+    }
     setBoardProps(boardRows, boardCols, totalBombsCount);
     setIsModalVisible(false);
   };
@@ -79,7 +83,7 @@ export default function GameSetupForm({
             type="number"
             required
             min={10}
-            max={100}
+            max={800}
             {...register('totalBombsCount', {
               required: true
             })}
