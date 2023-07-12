@@ -11,8 +11,9 @@ import Tile from '@components/tile';
 import '@styles/board.scss';
 
 export default function Board() {
-  const { boardRows, boardCols, totalBombsCount, bombsLeftCount, board } =
-    useAppSelector((state) => state.boardSlice);
+  const { boardRows, boardCols, totalBombsCount, board } = useAppSelector(
+    (state) => state.boardSlice
+  );
   const dispatch = useAppDispatch();
   const boardRef = useRef<HTMLDivElement>(null!);
 
@@ -32,13 +33,15 @@ export default function Board() {
   }, [boardRows, boardCols, totalBombsCount]);
 
   useEffect(() => {
-    if (bombsLeftCount !== 0) return;
+    if (!board.length) return;
     const isAllSafeTilesOpen = board
       .flat()
       .every((tile) => tile.isBomb || tile.isOpen);
 
-    if (isAllSafeTilesOpen) dispatch(setGameWonStatus({ status: true }));
-  }, [bombsLeftCount]);
+    if (isAllSafeTilesOpen) {
+      dispatch(setGameWonStatus({ status: true }));
+    }
+  }, [board]);
 
   return (
     <div className="board" ref={boardRef}>
