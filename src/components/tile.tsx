@@ -15,7 +15,7 @@ import {
 } from '@app/slices/boardSlice';
 import { determineNumberColor } from '@utils/determineNumberColor';
 import getAdjacentTiles from '@utils/getAdjacentTiles';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import FlagIcon from '@/asset/icon/flag-icon';
 import QuestionMarkIcon from '@/asset/icon/question-mark-icon';
 import BombIcon from '@/asset/icon/bomb-icon';
@@ -65,10 +65,17 @@ export default function Tile({
     });
   };
 
+  const color = useMemo(() => {
+    if (!isNumberMarked) {
+      return null;
+    }
+    return determineNumberColor(value);
+  }, [isNumberMarked, value]);
+
   useEffect(() => {
-    if (!isNumberMarked) return;
-    setNumberColor(determineNumberColor(value));
-  }, [isNumberMarked]);
+    if (!color) return;
+    setNumberColor(color);
+  }, [color]);
 
   const onTileLeftClick = () => {
     if (isFlagged || isQuestionMark) return;
