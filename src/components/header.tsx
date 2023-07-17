@@ -12,6 +12,7 @@ import generateBoard from '@utils/generateBoard';
 import '@styles/header.scss';
 import { padStartZero } from '@/utils/padStartZero';
 import Timer from '@components/timer';
+import DefaultEmojiIcon from '@/asset/icon/default-emoji-icon';
 
 export default function Header() {
   const { boardRows, boardCols, totalBombsCount, bombsLeftCount } =
@@ -41,7 +42,7 @@ export default function Header() {
       </div>
       <div>
         <button type="button" onClick={() => onRestartClick()}>
-          Restart
+          <DefaultEmojiIcon />
         </button>
       </div>
       <div className="timer">
