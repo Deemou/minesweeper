@@ -4,7 +4,11 @@ import {
   setBoardRows,
   setBoardCols,
   setTotalBombsCount,
-  initBombsLeftCount
+  initBombsLeftCount,
+  setGameStartStatus,
+  setGameOverStatus,
+  setGameWonStatus,
+  initTileClickCount
 } from '@app/slices/boardSlice';
 import CheckIcon from '@/asset/icon/check-icon';
 import GameSetupModal from '@/components/game-setup-modal';
@@ -39,6 +43,11 @@ export default function Menu() {
       dispatch(setBoardCols({ boardCols }));
       dispatch(setTotalBombsCount({ totalBombsCount }));
       dispatch(initBombsLeftCount());
+
+      dispatch(setGameStartStatus({ status: false }));
+      dispatch(setGameOverStatus({ status: false }));
+      dispatch(setGameWonStatus({ status: false }));
+      dispatch(initTileClickCount());
     },
     []
   );
